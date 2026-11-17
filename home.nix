@@ -3,20 +3,38 @@
 {
   home.username = "touken";
   home.homeDirectory = "/home/touken";
-  home.stateVersion = "26.11"; # 状态目录兼容性基准版本，设定后勿改
+  home.stateVersion = "26.11"; # 兼容性基准，一旦设定不再调高
 
-  targets.genericLinux.enable = true; # 在非 NixOS 上自动接管 PATH 与环境变量
-  programs.bash.enable = true; # 接管 bashrc 以注入上述 shellAliases（若用 zsh 则改为 programs.zsh.enable = true）
-  # 快捷管理别名：hms 切换生效，hmu 仅更新锁文件
+  targets.genericLinux.enable = true; # 非 NixOS 下由 HM 设置 NIX_PATH 等环境变量
+  programs.bash.enable = true; # shellAliases 依赖 shell 模块写入 bashrc
   home.shellAliases = {
     hms = "home-manager switch --flake ~/.config/home-manager#touken@$(uname -m)-linux";
-    hmu = "nix flake update --flake ~/.config/home-manager";
+    hmu = "nix flake update --flake ~/.config/home-manager"; # 仅更新锁文件
   };
-
 
   home.packages = with pkgs; [
     micro
+
+    # C/C++ 工具链
+    stdenv.cc # 包装后的 GCC + Binutils + glibc 头文件，优于裸 gcc
+    gnumake
+    cmake
+    ninja
+    pkg-config
+    conan
+
+    # 调试与静态分析
+    gdb
+    clang-tools # clangd / clang-format / clang-tidy
+
+    # Python
+    uv # 包管理、虚拟环境与解释器版本管理
+    ruff # Linter 与格式化
+    ty # 类型检查器，同时提供 LSP
   ];
+
+  # 供 `uv tool install` 装入的独立工具使用
+  home.sessionPath = [ "$HOME/.local/bin" ];
 
   programs.git = {
     enable = true;
@@ -29,15 +47,15 @@
 
   programs.opencode = {
     enable = true;
-    settings.autoupdate = "notify"; # 避免直接写入只读的 /nix/store
+    settings.autoupdate = "notify"; # /nix/store 只读，无法自更新
   };
 
-  # 每周自动清理超过 7 天的旧代际与无用缓存
+  # 每周清理 7 天前的旧代际与无用缓存
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
 
-  programs.home-manager.enable = true; # 接管自身 CLI
+  programs.home-manager.enable = true;
 }

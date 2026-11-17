@@ -31,6 +31,24 @@
     uv # 包管理、虚拟环境与解释器版本管理
     ruff # Linter 与格式化
     ty # 类型检查器，同时提供 LSP
+
+    # Java
+    jdk21
+    maven
+    gradle
+
+    # Node.js
+    nodejs
+    pnpm
+
+    # Go
+    go
+
+    # Rust
+    rustc
+    cargo
+    clippy
+    rustfmt
   ];
 
   # 供 `uv tool install` 装入的独立工具使用

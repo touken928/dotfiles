@@ -51,8 +51,19 @@
     rustfmt
   ];
 
-  # 供 `uv tool install` 装入的独立工具使用
-  home.sessionPath = [ "$HOME/.local/bin" ];
+  # 仅显式声明必须跟随 /nix/store 哈希变化的路径
+  home.sessionVariables = {
+    JAVA_HOME = "${pkgs.jdk21}";
+    PNPM_HOME = "$HOME/.local/share/pnpm";
+  };
+
+  # 将各语言自行安装的全局 CLI 工具目录统一纳入 PATH
+  home.sessionPath = [
+    "$HOME/.local/bin" # uv tool / 用户级脚本
+    "$HOME/.local/share/pnpm" # pnpm add -g
+    "$HOME/go/bin" # go install
+    "$HOME/.cargo/bin" # cargo install
+  ];
 
   programs.git = {
     enable = true;

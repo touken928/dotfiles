@@ -55,6 +55,8 @@
   home.sessionVariables = {
     JAVA_HOME = "${pkgs.jdk21}";
     PNPM_HOME = "$HOME/.local/share/pnpm";
+    EDITOR = "micro"; # 默认编辑器：yazi opener、git、crontab 等均读取此变量
+    VISUAL = "micro";
   };
 
   # 将各语言自行安装的全局 CLI 工具目录统一纳入 PATH
@@ -77,6 +79,34 @@
   programs.opencode = {
     enable = true;
     settings.autoupdate = "notify"; # /nix/store 只读，无法自更新
+  };
+
+  programs.yazi = {
+    enable = true; # 同时注入 bash 集成，退出后停在最后浏览的目录
+
+    # 预览与跳转依赖只进 yazi 包装器的 PATH，不污染全局环境
+    extraPackages = with pkgs; [
+      ffmpeg # 视频缩略图
+      _7zz # 压缩包
+      poppler-utils # PDF（pdftoppm）
+      imagemagick # 图片缩放
+      chafa # 无 Kitty/Sixel 协议时的字符画预览
+      fd # 文件搜索
+      ripgrep # 内容搜索
+      fzf # 模糊查找
+      zoxide # 目录跳转
+      jq # JSON 预览
+    ];
+
+    settings = {
+      mgr = {
+        ratio = [ 1 3 4 ];
+        show_hidden = true;
+      };
+      preview = {
+        wrap = "yes";
+      };
+    };
   };
 
   # 每周清理 7 天前的旧代际与无用缓存

@@ -38,7 +38,7 @@
    nix run home-manager/master -- switch --flake ".#touken@$(uname -m)-linux"
    ```
 
-   > 若系统已安装 `git`，也可直接使用 `git clone`。首次切换生效后，日常更新可直接使用内置别名：`hms` 切换配置、`hmu` 更新 Flake 锁文件。
+   > 若系统已安装 `git`，也可直接使用 `git clone`。首次切换生效后，日常更新可直接使用内置别名 `hms` 切换配置。
 
 ## 目录结构
 
@@ -60,7 +60,7 @@
 
 ```bash
 cd ~/.config/home-manager
-nix shell nixpkgs#sops nixpkgs#micro -c env EDITOR=micro sops secrets.yaml
+sops secrets.yaml
 ```
 
 在打开的 YAML 中加入键值，例如：
@@ -100,3 +100,22 @@ nix shell nixpkgs#age nixpkgs#sops -c bash -c '
 ```
 
 > 轮换后请立即备份新的 `~/.config/sops/age/keys.txt`；旧私钥在 `sops updatekeys` 成功后即失效。
+
+## 更新依赖
+
+更新全部输入（`flake.lock`）：
+
+```bash
+cd ~/.config/home-manager
+nix flake update
+hms
+```
+
+仅更新单个输入，例如 `nixpkgs`：
+
+```bash
+nix flake update nixpkgs
+hms
+```
+
+> 更新后若出现兼容性问题，可用 `git checkout flake.lock` 回滚，再执行 `hms`。

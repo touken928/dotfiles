@@ -5,6 +5,5 @@
 
   home.shellAliases = {
     hms = "home-manager switch --flake ~/.config/home-manager#touken@$(uname -m)-linux";
-    hmu = "nix flake update --flake ~/.config/home-manager"; # 仅更新锁文件
   };
 }

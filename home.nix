@@ -107,6 +107,17 @@
         wrap = "yes";
       };
     };
+
+    # nixpkgs 已随 flake.lock 固定了插件版本，无需额外引入 yazi-rs/plugins 输入
+    plugins.toggle-pane = pkgs.yaziPlugins.toggle-pane;
+
+    keymap.mgr.prepend_keymap = [
+      {
+        on = "T";
+        run = "plugin toggle-pane max-preview";
+        desc = "Maximize or restore preview pane";
+      }
+    ];
   };
 
   # 每周清理 7 天前的旧代际与无用缓存

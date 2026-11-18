@@ -3,8 +3,8 @@
 {
   # sops-nix：密钥以加密形式存入仓库，激活时解密到 ~/.config/sops-nix/secrets
   sops = {
-    # 所有密钥默认从此文件读取
-    defaultSopsFile = ./secrets.yaml;
+    # 所有密钥默认从此文件读取（仓库根目录）
+    defaultSopsFile = ../secrets.yaml;
 
     # 独立的 age 身份文件，放在仓库之外；sops 与 sops-nix 共用该默认路径
     # 生成：age-keygen -o ~/.config/sops/age/keys.txt

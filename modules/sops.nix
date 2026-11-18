@@ -16,5 +16,8 @@
     #   path = "${config.home.homeDirectory}/.config/example/api-key";
     #   mode = "0400";
     # };
+
+    # OpenCode 的 xiaoxi 提供方 API Key
+    secrets."xiaoxi_api_key" = { };
   };
 }

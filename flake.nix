@@ -8,9 +8,14 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs"; # 复用同一 nixpkgs 避免版本冲突
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, sops-nix, ... }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
 
@@ -20,7 +25,7 @@
             inherit system;
             config.allowUnfree = true; # 允许非自由软件包
           };
-          modules = [ ./home.nix ];
+          modules = [ ./home.nix sops-nix.homeManagerModules.sops ];
         };
     in
     {

@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./programs ];
+  imports = [ ./programs ./modules ];
 
   home.username = "touken";
   home.homeDirectory = "/home/touken";
@@ -11,6 +11,9 @@
 
   home.packages = with pkgs; [
     micro
+
+    # 密钥管理
+    sops # 编辑 secrets/ 下的加密文件
 
     # C/C++ 工具链
     stdenv.cc # 包装后的 GCC + Binutils + glibc 头文件，优于裸 gcc

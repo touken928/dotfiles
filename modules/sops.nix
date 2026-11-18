@@ -19,5 +19,8 @@
 
     # OpenCode 的 xiaoxi 提供方 API Key
     secrets."xiaoxi_api_key" = { };
+
+    # DeepSeek 官方 API Key
+    secrets."deepseek_api_key" = { };
   };
 }

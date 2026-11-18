@@ -5,7 +5,19 @@
 ## 环境要求
 
 - Linux 系统（`x86_64-linux` 或 `aarch64-linux`，支持 NixOS 与 Debian/Ubuntu）
-- 已安装 Nix 并启用 `nix-command` 与 `flakes`，以及 `git`
+- 已安装 Nix。NixOS 在 `configuration.nix` 中启用：
+
+  ```nix
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  programs.nix-ld.enable = true;
+  ```
+
+  非 NixOS 在 `/etc/nix/nix.conf` 中添加：
+
+  ```ini
+  experimental-features = nix-command flakes
+  ```
+
 - 已备份 `age` 解密私钥（见下文「快速部署」）
 
 ## 快速部署
@@ -21,12 +33,12 @@
 2. **克隆仓库并应用配置**：
 
    ```bash
-   git clone https://github.com/touken928/dotfiles.git ~/.config/home-manager
+   nix run nixpkgs#git -- clone https://github.com/touken928/dotfiles.git ~/.config/home-manager
    cd ~/.config/home-manager
    nix run home-manager/master -- switch --flake ".#touken@$(uname -m)-linux"
    ```
 
-   > 首次切换生效后，日常更新可直接使用内置别名：`hms` 切换配置、`hmu` 更新 Flake 锁文件。
+   > 若系统已安装 `git`，也可直接使用 `git clone`。首次切换生效后，日常更新可直接使用内置别名：`hms` 切换配置、`hmu` 更新 Flake 锁文件。
 
 ## 目录结构
 

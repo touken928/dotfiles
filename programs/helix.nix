@@ -8,6 +8,7 @@
       editor = {
         line-number = "relative";
         bufferline = "multiple";
+        auto-format = true; # 保存时自动格式化
       };
     };
 
@@ -22,9 +23,21 @@
       map (name: {
         inherit name;
         indent = indent4;
+        auto-format = true;
       } // lib.optionalAttrs (name == "python") {
-        # Python：ty 提供 LSP，ruff 提供 lint/修复
+        # Python：ty 提供 LSP，ruff 提供 lint/修复与格式化
         "language-servers" = [ "ty" "ruff" ];
+        formatter = {
+          command = "${pkgs.ruff}/bin/ruff";
+          args = [ "format" "-" ];
+        };
+      } // lib.optionalAttrs (name == "nix") {
+        formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+      } // lib.optionalAttrs (name == "bash") {
+        formatter = {
+          command = "${pkgs.shfmt}/bin/shfmt";
+          args = [ "-i" "4" ];
+        };
       }) [
         "bash"
         "c"

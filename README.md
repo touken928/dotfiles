@@ -48,7 +48,8 @@
 ├── home.nix           # 用户信息、软件包、会话变量
 ├── secrets.yaml       # sops 加密后的密钥（密文）
 ├── .sops.yaml         # sops 收件人规则
-├── modules/           # 非 programs 模块（sops 等）
+├── files/             # 静态资产
+├── modules/           # 非 programs 模块
 └── programs/          # 各 programs.* 独立模块
 ```
 

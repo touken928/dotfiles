@@ -51,6 +51,9 @@
     rustfmt
   ];
 
+  # clangd / clang-format 的全局默认风格；项目内的 .clang-format 仍会优先
+  home.file.".clang-format".source = ./files/.clang-format;
+
   # 仅显式声明必须跟随 /nix/store 哈希变化的路径
   home.sessionVariables = {
     JAVA_HOME = "${pkgs.jdk21}";

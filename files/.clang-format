@@ -1,0 +1,17 @@
+BasedOnStyle: LLVM
+
+IndentWidth: 4                       # 4 空格缩进
+TabWidth: 4                          # Tab 宽度
+ColumnLimit: 0                       # 不限制行宽
+
+AccessModifierOffset: -4             # public/private 左对齐
+
+Standard: Auto                       # 自动识别 C++ 标准
+
+AllowShortBlocksOnASingleLine: Empty # 空代码块允许单行
+AllowShortIfStatementsOnASingleLine: WithoutElse # 简短 if 允许单行
+AllowShortFunctionsOnASingleLine: None # 函数体始终多行
+
+BreakTemplateDeclarations: Yes       # 模板声明后换行
+
+SortIncludes: Never                  # 不自动排序头文件

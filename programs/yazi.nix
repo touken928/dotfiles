@@ -37,6 +37,17 @@
         run = "plugin toggle-pane max-preview";
         desc = "Maximize or restore preview pane";
       }
+      # 覆盖默认的 seek 5 / -5，改为每次精细滚动 1 行
+      {
+        on = [ "J" ];
+        run = "seek 1";
+        desc = "向下滚动 1 行预览";
+      }
+      {
+        on = [ "K" ];
+        run = "seek -1";
+        desc = "向上滚动 1 行预览";
+      }
     ];
   };
 }

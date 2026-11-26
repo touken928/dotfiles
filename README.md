@@ -33,7 +33,7 @@
 2. **克隆仓库并应用配置**：
 
    ```bash
-   nix run nixpkgs#git -- clone https://github.com/touken928/dotfiles.git ~/.config/home-manager
+   nix run nixpkgs#git -- clone git@github.com:touken928/dotfiles.git ~/.config/home-manager
    cd ~/.config/home-manager
    nix run home-manager/master -- switch --flake ".#touken@$(uname -m)-linux"
    ```
